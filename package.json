@@ -1,0 +1,17 @@
+{
+  "name": "scrup_image",
+  "version": "1.0.0",
+  "description": "catch images from foreign sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SeregaWEB",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.14",
+    "pipe": "^1.1.0",
+    "puppeteer": "^11.0.0",
+    "request": "^2.88.2"
+  }
+}
