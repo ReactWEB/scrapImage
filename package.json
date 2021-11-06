@@ -9,9 +9,13 @@
   "author": "SeregaWEB",
   "license": "ISC",
   "dependencies": {
+    "eslint": "^8.1.0",
     "nodemon": "^2.0.14",
     "pipe": "^1.1.0",
     "puppeteer": "^11.0.0",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "prettier": "2.4.1"
   }
 }
