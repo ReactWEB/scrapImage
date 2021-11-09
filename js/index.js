@@ -1,25 +1,41 @@
-let fs = require('fs');
 const request = require('request');
-const url = 'https://dou.ua';
+const fs = require('fs');
+const url = 'https://dou.ua/';
+const linkArr = [];
+let str = '', 
+    catchLink = '';
 
-request(url).pipe(
-    fs.createWriteStream('dou-page.html')
-);
-
-request(url, function(error, response, body) {
-  console.error('error:', error);
+request(url, function (error, response, body) {
+  console.error('error:', error); 
   console.log('statusCode:', response && response.statusCode); 
 
-  const getHTML = (HTMLbody) => {
-    const startStr = HTMLbody.indexOf('<h3>Радимо почитати');
-    const endStr = HTMLbody.indexOf('<footer class="b-footer">');
-    console.log(startStr, endStr);
-    let str = '';
-    for (let i = startStr; i < endStr; i++){      
-        str = `${str}${HTMLbody[i]}`;
-    }
-    console.log(str);
+  const getHTML = (HTMLBody) => {    
+    const startStr = HTMLBody.indexOf('<div class="b-footer-slider m-hide">');
+    const endStr = HTMLBody.indexOf('<footer class="b-footer">');
+
+    for (let i = startStr; i < endStr; i++) {
+      str = `${str}${HTMLBody[i]}`
+    }     
   };
+
   getHTML(body);
+
+  const cropLink = (string) => {
+    
+    let linkHead = string.indexOf('https://s.dou.ua/img/announces/'),
+        linkFoot = string.indexOf('1.1x'),    
+        resSent = string;   
+    
+    do {      
+      catchLink = resSent.slice(linkHead, linkFoot);      
+      linkArr.push(catchLink);      
+      resSent = resSent.slice(linkFoot +1);      
+      linkHead = resSent.indexOf('https://s.dou.ua/img/announces/');      
+      linkFoot = resSent.indexOf('1.1x');
+    } while (linkHead > 0);
+  }
+  cropLink(str);  
+  console.log(linkArr);
 });
+
 
